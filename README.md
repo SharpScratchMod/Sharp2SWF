@@ -101,6 +101,7 @@ This is probably a bug, please report it.
 ### "File * cannot be loaded because running scripts is disabled on this system."
 Type `Set-ExecutionPolicy -Scope Process Bypass -Force` into PowerShell before using `.\Build.ps1` to override this.
 
+#### Description of what this does
 `Set-ExecutionPolicy` is the PowerShell command to change the execution policy, which is what is restricting running the script as it is unknown.
 
 `-Scope Process` makes it only change for this PowerShell session and revert when you close the PowerShell window.
