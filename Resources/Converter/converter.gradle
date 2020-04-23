@@ -1,0 +1,52 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'org.gradlefx', name: 'gradlefx', version: '1.2.0'
+    }
+}
+
+repositories {
+    ivy {
+        name 'Apache Flex'
+        artifactPattern 'https://downloads.apache.org/flex/[revision]/binaries/[module]-[revision]-bin.[ext]'
+    }
+    ivy {
+        name 'Player Globals'
+        artifactPattern 'http://fpdownload.macromedia.com/get/flashplayer/installers/archive/[module]/[module][revision].[ext]'
+    }
+}
+
+apply plugin: org.gradlefx.plugins.GradleFxPlugin
+
+def commonDir = ext.commonDir
+
+type = 'mobile'
+version = '1.0-SNAPSHOT'
+frameworkLinkage = 'none'
+buildDir = "${buildDir}" // GradleFX does an out-of-date check on the whole build dir
+playerVersion = '11.6'
+
+dependencies {
+    flexSDK group: 'org.apache', name: 'apache-flex-sdk', version: '4.16.1', ext: 'zip'
+    external group: 'macromedia.com', name: 'playerglobal', version: playerVersion.replace('.', '_'), ext: 'swc'
+    merged files(
+		"${commonDir}/libs/as3corelib.swc",
+    )
+}
+
+sdkAutoInstall {
+    showPrompts = false
+}
+
+additionalCompilerOptions = [
+        "--static-link-runtime-shared-libraries=true",
+		"-library-path+=libs/framework.swc", // in the SDK's frameworks directory
+        "-library-path+=libs/osmf.swc", // in the SDK's frameworks directory
+		"-target-player=${playerVersion}"
+]
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.5'
+}

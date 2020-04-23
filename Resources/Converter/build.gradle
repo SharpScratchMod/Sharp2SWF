@@ -1,0 +1,5 @@
+ext.commonDir = '.'
+apply from: 'converter.gradle'
+
+srcDirs = ['src']
+mainClass = 'Converter.as'

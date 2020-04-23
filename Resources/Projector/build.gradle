@@ -1,0 +1,5 @@
+ext.commonDir = '.'
+apply from: 'projector.gradle'
+
+srcDirs = ['src']
+mainClass = 'Main.as'

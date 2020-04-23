@@ -1,0 +1,5 @@
+ext.commonDir = '.'
+apply from: 'scratch.gradle'
+
+srcDirs = ['src']
+mainClass = 'Loader/SB2Loader.as'
